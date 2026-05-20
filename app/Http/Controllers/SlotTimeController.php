@@ -9,31 +9,34 @@ use Illuminate\Http\RedirectResponse;
 
 class SlotTimeController extends Controller
 {
-    // Menampilkan semua daftar slot waktu
     public function index(): View
     {
-        // Menampilkan slot dari tanggal paling baru, 15 data per halaman
-        $slots = SlotTime::orderBy('date', 'desc')
+        $slots = SlotTime::orderBy('date', 'asc')
                          ->orderBy('start_time', 'asc')
                          ->paginate(15);
 
-        return view('slot_times.index', compact('slots'));
+        return view('admin.slot.index', compact('slots'));
     }
 
-    // Menampilkan form tambah slot waktu baru (Oleh Admin)
     public function create(): View
     {
-        return view('slot_times.create');
+        return view('admin.slot.create');
     }
 
-    // Menyimpan slot waktu baru ke database
     public function store(Request $request): RedirectResponse
     {
+        if ($request->has('start_time') && $request->start_time) {
+            $request->merge(['start_time' => str_replace('.', ':', $request->start_time)]);
+        }
+        if ($request->has('done_time') && $request->done_time) {
+            $request->merge(['done_time' => str_replace('.', ':', $request->done_time)]);
+        }
+
         $validatedData = $request->validate([
-            'date' => 'required|date|after_or_equal:today', // Slot tidak boleh dibuat untuk tanggal kemarin
+            'date' => 'required|date',
             'start_time' => 'required|date_format:H:i',
-            'done_time' => 'required|date_format:H:i|after:start_time', // Jam selesai harus setelah jam mulai
-            'status' => 'required|in:available,booked',
+            'done_time' => 'required|date_format:H:i|after:start_time',
+            'status' => 'required',
         ]);
 
         SlotTime::create([
@@ -43,17 +46,14 @@ class SlotTimeController extends Controller
             'status' => $validatedData['status'],
         ]);
 
-        return redirect()->route('slot-times.index')
-                         ->with('success', 'Slot waktu baru berhasil ditambahkan!');
+        return redirect('admin/slot')->with('success', 'Time slot successfully created!');
     }
 
-    // Menampilkan form edit status/jam slot
     public function edit(SlotTime $slotTime): View
     {
-        return view('slot_times.edit', compact('slotTime'));
+        return view('admin.slot.edit', compact('slotTime'));
     }
 
-    // Memperbarui data slot waktu
     public function update(Request $request, SlotTime $slotTime): RedirectResponse
     {
         $validatedData = $request->validate([
@@ -70,22 +70,16 @@ class SlotTimeController extends Controller
             'status' => $validatedData['status'],
         ]);
 
-        return redirect()->route('slot-times.index')
-                         ->with('success', 'Slot waktu berhasil diperbarui!');
+        return redirect('admin/slot')->with('success', 'Time slot successfully updated!');
     }
 
-    // Menghapus slot waktu
-    public function destroy(SlotTime $slotTime): RedirectResponse
+    public function destroy($id)
     {
-        // Cek relasi Many-to-Many ke tabel reservations()
-        if ($slotTime->reservations()->exists()) {
-            return redirect()->route('slot-times.index')
-                ->with('error', 'Slot tidak bisa dihapus karena sudah dibooking oleh customer dalam transaksi reservasi.');
-        }
-
-        $slotTime->delete();
-
-        return redirect()->route('slot-times.index')
-                         ->with('success', 'Slot waktu berhasil dihapus!');
+        // mencari data slot berdasarkan ID Primary Key-nya
+        $slot = \App\Models\SlotTime::findOrFail($id);
+        $slot->reservations()->detach();
+        $slot->delete();
+        
+        return redirect('/admin/slot')->with('success', 'Time slot successfully deleted!');
     }
 }

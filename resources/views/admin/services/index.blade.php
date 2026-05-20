@@ -4,13 +4,13 @@
 <div class="max-w-7xl mx-auto px-6 py-12">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-3xl font-bold text-slate-800">Manage Salon Services</h2>
-        <a href="{{ route('admin.services.create') }}" class="bg-pink-600 hover:bg-pink-700 text-white px-5 py-2.5 rounded-full font-semibold shadow transition">
+        <a href="{{ route('admin.services.create') }}" class="bg-pink-600 hover:bg-pink-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-sm transition-all inline-flex items-center gap-1.5 text-sm transform hover:-translate-y-0.5">
             + Add New Service
         </a>
     </div>
 
     @if(session('success'))
-        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-4 text-sm font-semibold shadow-sm">
             {{ session('success') }}
         </div>
     @endif

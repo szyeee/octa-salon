@@ -71,7 +71,7 @@
                     <a href="/admin/services" class="text-sm font-medium {{ Request::is('admin/services*') ? 'text-pink-600 font-semibold' : 'text-slate-600 hover:text-pink-600' }} transition">
                         Services
                     </a>
-                    <a href="/admin/slots" class="text-sm font-medium {{ Request::is('admin/slots*') ? 'text-pink-600 font-semibold' : 'text-slate-600 hover:text-pink-600' }} transition">
+                    <a href="/admin/slot" class="text-sm font-medium {{ Request::is('admin/slot*') ? 'text-pink-600 font-semibold' : 'text-slate-600 hover:text-pink-600' }} transition">
                         Slots
                     </a>
                     <a href="/admin/reservations" class="text-sm font-medium {{ Request::is('admin/reservations*') ? 'text-pink-600 font-semibold' : 'text-slate-600 hover:text-pink-600' }} transition">

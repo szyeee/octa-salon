@@ -12,6 +12,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SlotTimeController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -68,4 +69,10 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
 
     Route::get('services', [ServiceController::class, 'adminIndex'])->name('services.index');
     Route::resource('services', ServiceController::class)->except(['index']);
+
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+    Route::patch('/reservations/{reservation}/status', [ReservationController::class, 'updateStatus'])->name('reservations.updateStatus');
+
+    Route::resource('slot', SlotTimeController::class)->parameters(['slot' => 'slotTime']);
 });

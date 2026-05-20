@@ -19,14 +19,14 @@
     </div>
 
     @if(session('success'))
-        <div class="mt-6 rounded-2xl bg-emerald-50 p-4 text-sm font-medium text-emerald-600 border border-emerald-100 flex items-center gap-2">
-            ✅ {{ session('success') }}
+        <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-xl mb-4 text-sm font-semibold shadow-sm">
+            {{ session('success') }}
         </div>
     @endif
 
     @if(session('error'))
-        <div class="mt-6 rounded-2xl bg-rose-50 p-4 text-sm font-medium text-rose-600 border border-rose-100 flex items-center gap-2">
-            ⚠️ {{ session('error') }}
+        <div class="bg-rose-100 border border-rose-400 text-rose-700 px-4 py-3 rounded-xl mb-4 text-sm font-semibold shadow-sm">
+            {{ session('error') }}
         </div>
     @endif
 
