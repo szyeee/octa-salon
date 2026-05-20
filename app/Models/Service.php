@@ -10,14 +10,12 @@ class Service extends Model
 
     protected $primaryKey = 'id_service';
 
-    protected $fillable = [
+    public $timestamps = false;
 
+    protected $fillable = [
         'name',
         'description',
         'price',
         'duration'
-
     ];
-
-    public $timestamps = true;
 }

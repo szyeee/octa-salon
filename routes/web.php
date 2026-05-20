@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -32,20 +31,16 @@ Route::post('/register', [AuthController::class, 'store']);
 
 Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::middleware('auth')->group(function () {
+Route::get('/appointments', [BookingController::class, 'history']);
 
-    Route::get('/appointments', [BookingController::class, 'history']);
+Route::get('/booking/create/{id}', [BookingController::class, 'create']);
 
-    Route::get('/booking/create/{id}', [BookingController::class, 'create']);
+Route::post('/booking/store', [BookingController::class, 'store']);
 
-    Route::post('/booking/store', [BookingController::class, 'store']);
+Route::get('/profile', function () {
 
-    Route::get('/profile', function () {
-
-        return view('profile.index');
-
-    });
-
-    Route::post('/profile/update', [AuthController::class, 'updateProfile']);
+    return view('profile.index');
 
 });
+
+Route::post('/profile/update', [AuthController::class, 'updateProfile']);
