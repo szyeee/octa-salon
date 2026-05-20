@@ -12,18 +12,25 @@ use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 
+
 class ReservationController extends Controller
 {
     // Menampilkan daftar reservasi
-    public function index(): View
+    public function index()
     {
-        // Mengambil data reservasi beserta relasi user dan service
-        $reservations = Reservation::with(['user', 'service'])
-                                    ->orderBy('date', 'desc')
-                                    ->orderBy('time', 'asc')
-                                    ->paginate(10);
+        $allReservations = \App\Models\Reservation::all();
+        $allReservations = $allReservations->sortBy('date')->sortBy('time');
 
-        return view('reservations.index', compact('reservations'));
+        // Tab 1: Khusus yang masih PENDING
+        $pendingReservations = $allReservations->where('status', 'pending');
+
+        // Tab 2: Khusus yang AKTIF HARI-H (CONFIRMED atau ARRIVED)
+        $activeReservations = $allReservations->whereIn('status', ['confirmed', 'arrived']);
+
+        // Tab 3: Khusus RIWAYAT ADMIN (DONE, CANCELLED, ABSENT)
+        $historyReservations = $allReservations->whereIn('status', ['done', 'cancelled', 'absent']);
+
+        return view('admin.reservations.index', compact('pendingReservations', 'activeReservations', 'historyReservations'));
     }
 
     // Menampilkan form booking baru untuk customer atau admin bisa buatkan untuk customer
@@ -38,7 +45,7 @@ class ReservationController extends Controller
                                    ->orderBy('start_time', 'asc')
                                    ->get();
 
-        return view('reservations.create', compact('services', 'availableSlots'));
+        return view('admin.reservations.create', compact('services', 'availableSlots'));
     }
 
     // Menyimpan data booking baru
@@ -81,48 +88,26 @@ class ReservationController extends Controller
     public function show(Reservation $reservation): View
     {
         $reservation->load('slots');
-        return view('reservations.show', compact('reservation'));
+        return view('admin.reservations.show', compact('reservation'));
     }
 
     // Mengubah status reservasi (Oleh Admin, misal: Confirmed / Cancelled / Done)
     public function updateStatus(Request $request, Reservation $reservation): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'status' => 'required|in:pending,confirmed,cancelled,arrived,absent,done',
+        $id_reservation = $request->route('id_reservation');
+
+        $request->validate([
+            'status_alur' => 'required|in:pending,confirmed,cancelled,arrived,absent,done'
         ]);
 
-        DB::transaction(function () use ($validatedData, $reservation) {
-            $statusBaru = $validatedData['status'];
+        $reservation = \App\Models\Reservation::where('id_reservation', $id_reservation)->first();
 
-            // Jika batal (cancelled) atau customer tidak datang (absent), bebaskan lagi slot waktunya
-            if ($statusBaru === 'cancelled' || $statusBaru === 'absent') {
-                $reservation->slots()->update(['status' => 'available']);
-            }
-            // Jika statusnya pending, confirmed, arrived, atau done, slot tetap terkunci (booked)
-            else {
-                $reservation->slots()->update(['status' => 'booked']);
-            }
+        if (!$reservation) {
+            return redirect()->back()->with('error', 'Data reservasi dengan ID ' . $id_reservation . ' tidak ditemukan!');
+        }
 
-            // Jika status diubah ke 'done', otomatis buat data transaksi keuangan
-            if ($statusBaru === 'done') {
-                // Ambil harga dari layanan yang dipilih pada reservasi
-                $totalHarga = $reservation->service->price;
-
-                // Cek dulu untuk memastikan data transaksi ini belum pernah dibuat sebelumnya untuk mencegah double input
-                $cekTransaksi = Transaction::where('id_reservation', $reservation->id_reservation)->exists();
-
-                if (!$cekTransaksi) {
-                    Transaction::create([
-                        'id_reservation' => $reservation->id_reservation,
-                        'total_price'    => $totalHarga,
-                        'payment_status' => 'paid', // Otomatis diset lunas setelah statusnya done
-                    ]);
-                }
-            }
-
-            // Update status reservasi
-            $reservation->update(['status' => $statusBaru]);
-        });
+        $reservation->status = $request->status_alur;
+        $reservation->save();
 
         return redirect()->back()->with('success', 'Status reservasi berhasil diperbarui!');
     }

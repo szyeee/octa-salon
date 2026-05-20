@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     protected $table = 'reservations';
-
     protected $primaryKey = 'id_reservation';
 
     protected $fillable = [
@@ -33,6 +32,17 @@ class Reservation extends Model
             User::class,
             'id_user',
             'id'
+        );
+    }
+    public function slots()
+    {
+        return $this->belongsToMany(
+            SlotTime::class,
+            'reservation_slots',
+            'id_reservation',
+            'id_slot',
+            'id_reservation',
+            'id_slot'
         );
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SlotTimeController;
+use App\Http\Controllers\ReservationController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -72,7 +73,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
 
     Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
     Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
-    Route::patch('/reservations/{reservation}/status', [ReservationController::class, 'updateStatus'])->name('reservations.updateStatus');
+    Route::patch('/reservations/{id_reservation}/update-status', [ReservationController::class, 'updateStatus']);
 
     Route::resource('slot', SlotTimeController::class)->parameters(['slot' => 'slotTime']);
 });
