@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('nomor_telepon', 20)->nullable();
             $table->boolean('is_admin')->default(false);
+            $table->rememberToken();
             $table->timestamps();
         });
         //tabel untuk fitur reset password

@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Support\Facades\Route;
@@ -10,6 +11,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -31,16 +33,38 @@ Route::post('/register', [AuthController::class, 'store']);
 
 Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::get('/appointments', [BookingController::class, 'history']);
+Route::middleware('auth')->group(function () {
 
-Route::get('/booking/create/{id}', [BookingController::class, 'create']);
+    Route::get('/home', [HomeController::class, 'index']);
 
-Route::post('/booking/store', [BookingController::class, 'store']);
+    Route::get('/appointments', [BookingController::class, 'history']);
 
-Route::get('/profile', function () {
+    Route::get('/booking/create/{id}', [BookingController::class, 'create']);
 
-    return view('profile.index');
+    Route::post('/booking/store', [BookingController::class, 'store']);
+
+    Route::get('/profile', function () {
+
+        return view('profile.index');
+
+    });
+
+    Route::post('/profile/update', [AuthController::class, 'updateProfile']);
 
 });
 
-Route::post('/profile/update', [AuthController::class, 'updateProfile']);
+Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
+
+Route::post('/forgot-password', [AuthController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('/reset-password/{token}', [AuthController::class, 'showResetPasswordForm'])->name('password.reset');
+
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
+
+// Route untuk admin
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->group(function () {
+
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('admin.dashboard');
+    Route::resource('customers', UserController::class);
+
+});

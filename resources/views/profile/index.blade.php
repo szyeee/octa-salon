@@ -36,7 +36,11 @@
 
                     <div class="mt-4 inline-flex rounded-full bg-white/20 px-5 py-2 text-sm backdrop-blur">
 
-                        Premium Salon Member
+                        @if(Auth::user()->is_admin)
+                            Official Admin Octa
+                        @else
+                            Premium Salon Member
+                        @endif
 
                     </div>
 
@@ -119,6 +123,22 @@
                         type="email"
                         name="email"
                         value="{{ Auth::user()->email }}"
+                        class="w-full rounded-3xl border border-slate-200 bg-slate-50 px-6 py-5 text-lg outline-none focus:border-pink-400 focus:bg-white">
+
+                </div>
+
+                <div>
+
+                    <label class="block mb-3 text-sm font-semibold text-slate-700">
+
+                        Phone Number
+
+                    </label>
+
+                    <input
+                        type="text"
+                        name="nomor_telepon"
+                        value="{{ Auth::user()->nomor_telepon }}"
                         class="w-full rounded-3xl border border-slate-200 bg-slate-50 px-6 py-5 text-lg outline-none focus:border-pink-400 focus:bg-white">
 
                 </div>

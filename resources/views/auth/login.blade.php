@@ -80,6 +80,12 @@
 
                     </div>
 
+                    <div class="flex justify-end text-sm">
+                        <a href="/forgot-password" class="font-medium text-pink-600 hover:text-pink-700 hover:underline">
+                            Forgot Password?
+                        </a>
+                    </div>
+
                     <button
                         class="w-full rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 py-4 text-lg font-bold text-white shadow-xl shadow-pink-200 transition hover:scale-[1.02]">
 

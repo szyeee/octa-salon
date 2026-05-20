@@ -4,23 +4,6 @@
 
 <section class="max-w-6xl mx-auto px-6 py-14">
 
-    @php
-
-    $times = [
-        '10:00',
-        '11:00',
-        '12:00',
-        '13:00',
-        '14:00',
-        '15:00',
-        '16:00',
-        '17:00',
-        '18:00',
-        '19:00'
-    ];
-
-    @endphp
-
     <div class="grid lg:grid-cols-2 gap-10">
 
         <div class="overflow-hidden rounded-[2.5rem] border border-pink-100 bg-white shadow-xl">
@@ -133,7 +116,6 @@
                         type="date"
                         name="date"
                         min="{{ date('Y-m-d') }}"
-                        required
                         class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:border-pink-400 focus:bg-white">
 
                 </div>
@@ -148,37 +130,21 @@
 
                     <select
                         name="time"
-                        required
                         class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:border-pink-400 focus:bg-white">
 
                         <option value="">Choose Time</option>
 
-                        @foreach($times as $time)
-
-                            @php
-
-                                $isBooked = \App\Models\Reservation::where('time', $time)
-                                    ->where('date', date('Y-m-d'))
-                                    ->exists();
-
-                                $nextHour = sprintf(
-                                    '%02d:00',
-                                    ((int) substr($time,0,2)) + 1
-                                );
-
-                            @endphp
-
-                            <option
-                                value="{{ $time }}"
-                                {{ $isBooked ? 'disabled' : '' }}>
-
-                                {{ $time }} - {{ $nextHour }}
-
-                                {{ $isBooked ? '(FULL)' : '' }}
-
-                            </option>
-
-                        @endforeach
+                        <option>10:00</option>
+                        <option>11:00</option>
+                        <option>12:00</option>
+                        <option>13:00</option>
+                        <option>14:00</option>
+                        <option>15:00</option>
+                        <option>16:00</option>
+                        <option>17:00</option>
+                        <option>18:00</option>
+                        <option>19:00</option>
+                        <option>20:00</option>
 
                     </select>
 
