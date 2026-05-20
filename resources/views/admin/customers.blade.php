@@ -6,7 +6,10 @@
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-pink-100 pb-5 gap-4">
         <div>
             <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Manage Customers</h1>
-            <p class="mt-2 text-slate-500 text-sm">List of all customers registered in the Octa Salon system.</p>
+            <p class="mt-2 text-slate-500 text-sm mb-4">List of all customers registered in the Octa Salon system.</p>
+            <a href="{{ route('admin.customers.create') }}" class="bg-pink-600 hover:bg-pink-700 text-white px-5 py-2.5 rounded-xl font-semibold shadow-sm transition-all inline-flex items-center gap-1.5 text-sm transform hover:-translate-y-0.5">
+                + add new customer
+            </a>
         </div>
         <div>
             <span class="inline-flex items-center gap-2 rounded-2xl bg-pink-50 border border-pink-100 px-4 py-2 text-sm font-semibold text-pink-600 shadow-sm shadow-pink-100">
@@ -27,16 +30,16 @@
         </div>
     @endif
 
-    <div class="mt-8 overflow-hidden rounded-[2rem] border border-pink-50 bg-white shadow-xl shadow-pink-100/40">
+    <div class="mt-8 overflow-hidden rounded-2xl border border-pink-50 bg-white shadow-xl shadow-pink-100/40">
         <div class="overflow-x-auto">
-            <table class="w-full text-left border-collapse">
+            <table class="w-full text-left border-collapse border border-slate-200">
                 <thead>
-                    <tr class="bg-slate-50 border-b border-slate-100 text-xs font-bold uppercase tracking-wider text-slate-500">
-                        <th class="px-6 py-4">No</th>
-                        <th class="px-6 py-4">Customer Name</th>
-                        <th class="px-6 py-4">Email</th>
-                        <th class="px-6 py-4">Phone Number</th>
-                        <th class="px-6 py-4">Join Date</th>
+                    <tr class="bg-pink-200 text-slate-700 uppercase text-xs font-bold border-b border-slate-300">
+                        <th class="px-6 py-4 border-r border-slate-200">No</th>
+                        <th class="px-6 py-4 border-r border-slate-200">Customer Name</th>
+                        <th class="px-6 py-4 border-r border-slate-200">Email</th>
+                        <th class="px-6 py-4 border-r border-slate-200">Phone Number</th>
+                        <th class="px-6 py-4 border-r border-slate-200">Join Date</th>
                         <th class="px-6 py-4 text-center">Actions</th>
                     </tr>
                 </thead>
@@ -52,14 +55,14 @@
 
                                 <a href="/admin/customers/{{ $customer->id }}/edit"
                                    class="rounded-xl border border-pink-200 bg-white px-3 py-2 text-xs font-semibold text-pink-600 hover:bg-pink-50 transition-all shadow-sm">
-                                    ✏️ Edit
+                                    Edit
                                 </a>
 
                                 <form action="/admin/customers/{{ $customer->id }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pelanggan ini?')">
                                     @csrf
                                     @method('DELETE')
                                     <button class="rounded-xl bg-red-50 px-3 py-2 text-xs font-semibold text-red-500 hover:bg-red-500 hover:text-white transition-all shadow-sm">
-                                        🗑️ Delete
+                                        Delete
                                     </button>
                                 </form>
 

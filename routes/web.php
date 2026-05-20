@@ -15,8 +15,6 @@ use App\Http\Controllers\UserController;
 
 Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/services', [ServiceController::class, 'index']);
-
 Route::get('/gallery', [GalleryController::class, 'index']);
 
 Route::get('/about', [AboutController::class, 'index']);
@@ -50,6 +48,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('/profile/update', [AuthController::class, 'updateProfile']);
+    Route::resource('services', ServiceController::class);
 
 });
 
@@ -62,9 +61,11 @@ Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
 // Route untuk admin
-Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('admin.dashboard');
     Route::resource('customers', UserController::class);
 
+    Route::get('services', [ServiceController::class, 'adminIndex'])->name('services.index');
+    Route::resource('services', ServiceController::class)->except(['index']);
 });

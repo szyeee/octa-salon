@@ -40,7 +40,7 @@ class UserController extends Controller
     // Menampilkan form tambah pengguna baru
     public function create(): View
     {
-        return view('admin.customers.create');
+        return view('admin.createCustomer');
     }
 
     // Menyimpan pengguna baru ke database
@@ -51,7 +51,6 @@ class UserController extends Controller
             'email' => 'required|string|email|max:100|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
             'nomor_telepon' => 'nullable|string|max:20',
-            'is_admin' => 'required|boolean',
         ]);
 
         User::create([
@@ -59,11 +58,10 @@ class UserController extends Controller
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
             'nomor_telepon' => $validatedData['nomor_telepon'],
-            'is_admin' => $validatedData['is_admin'],
+            'is_admin' => 'false',
         ]);
 
-        return redirect()->route('admin.customers.index')
-                         ->with('success', 'Pengguna berhasil ditambahkan!');
+        return redirect('/admin/customers') ->with('success', 'User successfully added!');
     }
 
     // Menampilkan detail pengguna tertentu
@@ -110,7 +108,7 @@ class UserController extends Controller
 
         $customer->update($updateData);
 
-        return redirect('/admin/customers')->with('success', 'Data pengguna berhasil diperbarui!');
+        return redirect('/admin/customers')->with('success', 'User data has been successfully updated!');
     }
 
     // Menghapus pengguna dari database
@@ -120,12 +118,12 @@ class UserController extends Controller
 
         // Fitur pengaman untuk cek relasi ke tabel reservations
         if ($customer->reservations()->exists()) {
-            return redirect('/admin/customers')->with('error', 'Pengguna tidak dapat dihapus karena memiliki riwayat reservasi di Salon Octa.');
+            return redirect('/admin/customers')->with('error', 'User cannot be deleted because they have booking history at Octa Salon.');
         }
 
         // Jika tidak punya riwayat reservasi, aman untuk dihapus
         $customer->delete();
 
-        return redirect('/admin/customers')->with('success', 'Pengguna berhasil dihapus!');
+        return redirect('/admin/customers')->with('success', 'User successfully deleted!');
     }
 }
