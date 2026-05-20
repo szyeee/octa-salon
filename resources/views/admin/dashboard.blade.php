@@ -47,7 +47,7 @@
                 <p class="mt-2 text-sm text-slate-500">Add services, set prices, and service duration.</p>
             </a>
 
-            <a href="/admin/slots" class="group rounded-[2rem] bg-white p-6 shadow-xl shadow-pink-100/50 border border-pink-50 hover:border-pink-300 transition-all hover:-translate-y-1">
+            <a href="/admin/slot/index" class="group rounded-[2rem] bg-white p-6 shadow-xl shadow-pink-100/50 border border-pink-50 hover:border-pink-300 transition-all hover:-translate-y-1">
                 <div class="w-14 h-14 rounded-2xl bg-sky-100 text-sky-600 flex items-center justify-center text-2xl font-bold group-hover:bg-sky-500 group-hover:text-white transition-all">
                     ⏰
                 </div>
@@ -55,7 +55,7 @@
                 <p class="mt-2 text-sm text-slate-500">Set operational hours, opening sessions, and maximum booking limits for the salon.</p>
             </a>
 
-            <a href="/admin/appointments" class="group rounded-[2rem] bg-white p-6 shadow-xl shadow-pink-100/50 border border-pink-50 hover:border-pink-300 transition-all hover:-translate-y-1">
+            <a href="/reservations" class="group rounded-[2rem] bg-white p-6 shadow-xl shadow-pink-100/50 border border-pink-50 hover:border-pink-300 transition-all hover:-translate-y-1">
                 <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-2xl font-bold group-hover:bg-amber-500 group-hover:text-white transition-all">
                     📅
                 </div>

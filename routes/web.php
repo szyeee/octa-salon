@@ -12,10 +12,10 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SlotTimeController;
+use App\Http\Controllers\ReservationController;
 
 Route::get('/', [HomeController::class, 'index']);
-
-Route::get('/services', [ServiceController::class, 'index']);
 
 Route::get('/gallery', [GalleryController::class, 'index']);
 
@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('/profile/update', [AuthController::class, 'updateProfile']);
+    Route::resource('services', ServiceController::class);
 
 });
 
@@ -62,9 +63,17 @@ Route::get('/reset-password/{token}', [AuthController::class, 'showResetPassword
 Route::post('/reset-password', [AuthController::class, 'resetPassword'])->name('password.update');
 
 // Route untuk admin
-Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->group(function () {
+Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('admin.dashboard');
     Route::resource('customers', UserController::class);
 
+    Route::get('services', [ServiceController::class, 'adminIndex'])->name('services.index');
+    Route::resource('services', ServiceController::class)->except(['index']);
+
+    Route::get('/reservations', [ReservationController::class, 'index'])->name('reservations.index');
+    Route::delete('/reservations/{reservation}', [ReservationController::class, 'destroy'])->name('reservations.destroy');
+    Route::patch('/reservations/{id_reservation}/update-status', [ReservationController::class, 'updateStatus']);
+
+    Route::resource('slot', SlotTimeController::class)->parameters(['slot' => 'slotTime']);
 });
