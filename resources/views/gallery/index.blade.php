@@ -2,89 +2,76 @@
 
 @section('content')
 
-<section class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-r from-pink-500 via-rose-500 to-fuchsia-500"></div>
-
-    <div class="absolute inset-y-0 right-0 w-[35%] opacity-20 hidden lg:block">
-        <svg viewBox="0 0 500 500" class="h-full w-full">
-            <path d="M250 100 C300 200, 400 200, 450 300" stroke="white" stroke-width="3" fill="none"/>
-            <path d="M250 100 C200 200, 100 250, 120 380" stroke="white" stroke-width="3" fill="none"/>
-            <path d="M300 120 C360 170, 420 220, 460 340" stroke="white" stroke-width="2" fill="none" opacity="0.7"/>
-        </svg>
-    </div>
-
-    <div class="relative max-w-7xl mx-auto px-6 py-24">
-        <div class="max-w-3xl text-center mx-auto">
-            <span class="inline-flex items-center rounded-full bg-white/15 px-5 py-2 text-sm font-medium text-white backdrop-blur">
-                ✨ Beautiful Moments
-            </span>
-
-            <h1 class="mt-6 text-5xl md:text-6xl font-extrabold leading-tight text-white">
-                Our Gallery
-            </h1>
-
-            <p class="mt-5 text-lg leading-8 text-white/90">
-                Discover our salon atmosphere and beauty transformations.
-            </p>
-        </div>
+<section class="relative overflow-hidden bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 py-24">
+    <div class="max-w-7xl mx-auto px-6 text-center text-white relative z-10">
+        <span class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm backdrop-blur">
+            ✨ Beautiful Moments
+        </span>
+        <h1 class="mt-8 text-5xl md:text-6xl font-extrabold tracking-tight">
+            Our Gallery
+        </h1>
+        <p class="mt-5 text-lg text-white/90 max-w-2xl mx-auto">
+            Discover our salon atmosphere and beauty transformations.
+        </p>
     </div>
 </section>
 
-<section class="max-w-7xl mx-auto px-6 py-10">
-    <div class="flex flex-wrap justify-center gap-4 mb-10">
-        <button class="rounded-full bg-pink-500 px-6 py-3 text-sm font-semibold text-white shadow-lg">
+<section class="max-w-7xl mx-auto px-6 pt-12">
+    <div class="flex flex-wrap justify-center gap-3">
+        <a href="?category=all" 
+           class="px-6 py-2.5 text-sm font-semibold rounded-full transition shadow-sm
+           {{ $currentCategory == 'all' ? 'bg-pink-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-pink-300' }}">
             All
-        </button>
-        <button class="rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-700 hover:bg-pink-50 transition">
+        </a>
+        <a href="?category=hair-treatment" 
+           class="px-6 py-2.5 text-sm font-semibold rounded-full transition shadow-sm
+           {{ $currentCategory == 'hair-treatment' ? 'bg-pink-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-pink-300' }}">
             Hair Treatment
-        </button>
-        <button class="rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-700 hover:bg-pink-50 transition">
+        </a>
+        <a href="?category=salon-interior" 
+           class="px-6 py-2.5 text-sm font-semibold rounded-full transition shadow-sm
+           {{ $currentCategory == 'salon-interior' ? 'bg-pink-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-pink-300' }}">
             Salon Interior
-        </button>
-        <button class="rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-700 hover:bg-pink-50 transition">
+        </a>
+        <a href="?category=makeup" 
+           class="px-6 py-2.5 text-sm font-semibold rounded-full transition shadow-sm
+           {{ $currentCategory == 'makeup' ? 'bg-pink-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-pink-300' }}">
             Makeup
-        </button>
-        <button class="rounded-full border border-slate-200 bg-white px-6 py-3 text-sm font-medium text-slate-700 hover:bg-pink-50 transition">
+        </a>
+        <a href="?category=before-after" 
+           class="px-6 py-2.5 text-sm font-semibold rounded-full transition shadow-sm
+           {{ $currentCategory == 'before-after' ? 'bg-pink-600 text-white' : 'bg-white text-slate-600 border border-slate-200 hover:border-pink-300' }}">
             Before & After
-        </button>
+        </a>
     </div>
+</section>
 
-    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        <div class="overflow-hidden rounded-[1.5rem] shadow-lg group">
-            <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1200&q=80"
-                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-110"
-                 alt="Gallery 1">
-        </div>
+<section class="max-w-7xl mx-auto px-6 py-12">
+    <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-8">
 
-        <div class="overflow-hidden rounded-[1.5rem] shadow-lg group">
-            <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=1200&q=80"
-                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-110"
-                 alt="Gallery 2">
-        </div>
+        @forelse($galleries as $item)
+            <div class="group overflow-hidden rounded-[2rem] border border-pink-100 bg-white shadow-lg hover:-translate-y-2 hover:shadow-2xl transition duration-300">
+                
+                <div class="overflow-hidden h-64 w-full bg-slate-100">
+                    <img src="{{ $item['url'] }}" alt="{{ $item['title'] }}" class="h-full w-full object-cover group-hover:scale-105 transition duration-500">
+                </div>
 
-        <div class="overflow-hidden rounded-[1.5rem] shadow-lg group">
-            <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80"
-                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-110"
-                 alt="Gallery 3">
-        </div>
+                <div class="p-6">
+                    <span class="inline-block px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider bg-pink-50 text-pink-600 rounded-md mb-2">
+                        {{ str_replace('-', ' ', $item['category']) }}
+                    </span>
+                    <h3 class="text-lg font-bold text-slate-800">
+                        {{ $item['title'] }}
+                    </h3>
+                </div>
 
-        <div class="overflow-hidden rounded-[1.5rem] shadow-lg group">
-            <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=1200&q=80"
-                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-110"
-                 alt="Gallery 4">
-        </div>
+            </div>
+        @empty
+            <div class="col-span-full text-center py-16 bg-white rounded-[2rem] border border-pink-100 shadow-sm">
+                <p class="text-slate-400 font-medium">No photographs available in this category yet.</p>
+            </div>
+        @endforelse
 
-        <div class="overflow-hidden rounded-[1.5rem] shadow-lg group">
-            <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80"
-                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-110"
-                 alt="Gallery 5">
-        </div>
-
-        <div class="overflow-hidden rounded-[1.5rem] shadow-lg group">
-            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=1200&q=80"
-                 class="h-72 w-full object-cover transition duration-500 group-hover:scale-110"
-                 alt="Gallery 6">
-        </div>
     </div>
 </section>
 

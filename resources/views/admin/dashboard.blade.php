@@ -10,18 +10,31 @@
     </div>
 
     <div class="mt-8 grid gap-6 md:grid-cols-3">
-        <div class="rounded-[1.5rem] bg-white p-6 shadow-lg shadow-pink-100 border border-pink-50">
-            <div class="text-sm text-slate-500">Reservations</div>
+        
+        <a href="{{ route('admin.reservations.index') }}" class="group block rounded-[1.5rem] bg-white p-6 shadow-lg shadow-pink-100 border border-pink-50 hover:border-pink-300 hover:-translate-y-0.5 transition-all">
+            <div class="text-sm text-slate-500 group-hover:text-pink-600 transition-colors font-medium flex items-center justify-between">
+                <span>Reservations</span>
+                <span class="text-xs text-slate-400 group-hover:text-pink-500 font-normal">View All &rarr;</span>
+            </div>
             <div class="mt-3 text-4xl font-extrabold text-slate-900">{{ $totalReservations }}</div>
-        </div>
-        <div class="rounded-[1.5rem] bg-white p-6 shadow-lg shadow-pink-100 border border-pink-50">
-            <div class="text-sm text-slate-500">Services</div>
+        </a>
+
+        <a href="/admin/services" class="group block rounded-[1.5rem] bg-white p-6 shadow-lg shadow-pink-100 border border-pink-50 hover:border-pink-300 hover:-translate-y-0.5 transition-all">
+            <div class="text-sm text-slate-500 group-hover:text-purple-600 transition-colors font-medium flex items-center justify-between">
+                <span>Services</span>
+                <span class="text-xs text-slate-400 group-hover:text-purple-500 font-normal">View All &rarr;</span>
+            </div>
             <div class="mt-3 text-4xl font-extrabold text-slate-900">{{ $totalServices }}</div>
-        </div>
-        <div class="rounded-[1.5rem] bg-gradient-to-br from-pink-500 to-rose-500 p-6 text-white shadow-lg shadow-pink-200">
-            <div class="text-sm text-white/80">Revenue</div>
+        </a>
+
+        <a href="/admin/reports" class="group block rounded-[1.5rem] bg-gradient-to-br from-pink-500 to-rose-500 p-6 text-white shadow-lg shadow-pink-200 hover:opacity-95 hover:-translate-y-0.5 transition-all">
+            <div class="text-sm text-white/80 font-medium flex items-center justify-between">
+                <span>Revenue</span>
+                <span class="text-xs text-white/60 group-hover:text-white font-normal">View Reports &rarr;</span>
+            </div>
             <div class="mt-3 text-4xl font-extrabold">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
-        </div>
+        </a>
+
     </div>
 
     <div class="mt-12">
@@ -52,7 +65,7 @@
                     ⏰
                 </div>
                 <h4 class="mt-5 text-lg font-bold text-slate-800">Manage Slot Time</h4>
-                <p class="mt-2 text-sm text-slate-500">Set operational hours, opening sessions, and maximum booking limits for the salon.</p>
+                <p class="mt-2 text-sm text-slate-500">Set operating hours, manage active session schedules, and block or open time availability for customer bookings.</p>
             </a>
 
             <a href="{{ route('admin.reservations.index') }}" class="group rounded-[2rem] bg-white p-6 shadow-xl shadow-pink-100/50 border border-pink-50 hover:border-pink-300 transition-all hover:-translate-y-1">
