@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use App\Models\TransactionDetail;
 use App\Models\Service;
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -12,24 +13,28 @@ use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
-    // Tampilkan semua riwayat transaksi beserta detailnya
+    // 1. Tampilkan Halaman Utama POS Kasir
     public function index(): View
     {
-        $transactions = Transaction::with(['reservation.user', 'details.service'])
-                                    ->orderBy('payment_at', 'desc')
-                                    ->paginate(15);
+        $queue = Reservation::with(['user', 'service'])
+            ->where('status', 'arrived')
+            ->whereDoesntHave('transaction')
+            ->latest()
+            ->get();
 
-        return view('transactions.index', compact('transactions'));
+        $history = Transaction::with(['details.service', 'reservation.user'])
+            ->orderBy('created_at', 'desc')
+            ->get(); 
+
+        return view('admin.pos.index', compact('queue', 'history'));
     }
 
-    // Tampilkan form kasir untuk transaksi langsung/walk-in
     public function create(): View
     {
         $services = Service::all();
-        return view('transactions.create', compact('services'));
+        return view('admin.pos.create', compact('services'));
     }
-
-    // Simpan transaksi baru dari form kasir (walk-in) ke database
+    
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
@@ -39,7 +44,6 @@ class TransactionController extends Controller
         ]);
 
         DB::transaction(function () use ($request) {
-            // Buat kepala nota transaksi baru
             $transaction = Transaction::create([
                 'id_reservation' => null,
                 'customer_name'  => $request->customer_name,
@@ -49,10 +53,8 @@ class TransactionController extends Controller
 
             $grandTotal = 0;
 
-            // Simpan setiap layanan yang dipilih ke detail nota
             foreach ($request->services as $idService) {
                 $service = Service::findOrFail($idService);
-
                 $grandTotal += $service->price;
 
                 TransactionDetail::create([
@@ -63,18 +65,54 @@ class TransactionController extends Controller
                 ]);
             }
 
-            // Update total harga riil setelah kalkulasi selesai
             $transaction->update(['total_price' => $grandTotal]);
         });
 
-        return redirect()->route('transactions.index')
+        return redirect()->route('admin.pos.index')
                          ->with('success', 'Transaksi kasir salon berhasil disimpan!');
     }
 
-    // Tampilkan detail isi nota/struk belanja berdasarkan ID transaksi
     public function show(Transaction $transaction): View
     {
         $transaction->load(['reservation.user', 'details.service']);
         return view('transactions.show', compact('transaction'));
+    }
+
+    // 2. Memproses Pembayaran dari Antrean Reservasi
+    public function processReservationPayment(Request $request, $id_reservation): RedirectResponse
+    {
+        $reservation = Reservation::with('user')->findOrFail($id_reservation);
+        $service = $reservation->service; 
+
+        $request->validate([
+            'amount_paid' => 'required|numeric|min:' . $service->price,
+        ]);
+
+        DB::transaction(function () use ($reservation, $service) {
+            $fixName = $reservation->user->nama ?? ($reservation->customer_name ?? 'Pelanggan Reservasi');
+
+            // Buat nota transaksi
+            $transaction = Transaction::create([
+                'id_reservation' => $reservation->id_reservation,
+                'customer_name'  => $fixName,
+                'total_price'    => $service->price,
+                'status'         => 'paid',
+            ]);
+
+            // Simpan item layanannya
+            TransactionDetail::create([
+                'id_transaction'    => $transaction->id_transaction, 
+                'id_service'        => $service->id_service,
+                'quantity'          => 1,
+                'price_at_purchase' => $service->price,
+            ]);
+
+            $reservation->update([
+                'status' => 'done'
+            ]);
+        });
+
+        return redirect()->route('admin.pos.index')
+                         ->with('success', 'Pembayaran booking berhasil! Status reservasi kini DONE.');
     }
 }

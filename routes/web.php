@@ -14,6 +14,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SlotTimeController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\TransactionController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -79,5 +80,8 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('slot/index', [SlotTimeController::class, 'index'])->name('slot.index');
     Route::resource('slot', SlotTimeController::class)->parameters(['slot' => 'slotTime']);
 
-    Route::get('/pos-kasir', [ReservationController::class, 'posIndex'])->name('pos.index');
+    Route::get('/pos', [TransactionController::class, 'index'])->name('pos.index');
+    Route::post('/pos/pay/{id_reservation}', [TransactionController::class, 'processReservationPayment'])->name('pos.pay');
+    
+    Route::resource('transactions', TransactionController::class);
 });

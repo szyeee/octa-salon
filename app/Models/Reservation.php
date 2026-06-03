@@ -45,4 +45,8 @@ class Reservation extends Model
             'id_slot'
         );
     }
+
+    public function transaction() {
+        return $this->hasOne(Transaction::class, 'id_reservation');
+    }
 }
