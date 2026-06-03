@@ -27,12 +27,15 @@
             <div class="mt-3 text-4xl font-extrabold text-slate-900">{{ $totalServices }}</div>
         </a>
 
-        <a href="/admin/reports" class="group block rounded-[1.5rem] bg-gradient-to-br from-pink-500 to-rose-500 p-6 text-white shadow-lg shadow-pink-200 hover:opacity-95 hover:-translate-y-0.5 transition-all">
+        <a href="{{ route('admin.report.index') }}" class="group block rounded-[1.5rem] bg-gradient-to-br from-pink-500 to-rose-500 p-6 text-white shadow-lg shadow-pink-200 hover:opacity-95 hover:-translate-y-0.5 transition-all">
             <div class="text-sm text-white/80 font-medium flex items-center justify-between">
-                <span>Revenue</span>
+                <span>Total Revenue (All Time)</span>
                 <span class="text-xs text-white/60 group-hover:text-white font-normal">View Reports &rarr;</span>
             </div>
-            <div class="mt-3 text-4xl font-extrabold">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</div>
+
+            <div class="mt-3 text-4xl font-extrabold">
+                Rp {{ number_format(\App\Models\Transaction::sum('total_price') ?? 0, 0, ',', '.') }}
+            </div>
         </a>
 
     </div>
@@ -84,7 +87,7 @@
                 <p class="mt-2 text-sm text-slate-500">Process payment for completed invoices, print receipts, and manually input walk-in customers.</p>
             </a>
 
-            <a href="/admin/reports" class="group rounded-[2rem] bg-white p-6 shadow-xl shadow-pink-100/50 border border-pink-50 hover:border-pink-300 transition-all hover:-translate-y-1">
+            <a href="{{ route('admin.report.index') }}" class="group rounded-[2rem] bg-white p-6 shadow-xl shadow-pink-100/50 border border-pink-50 hover:border-pink-300 transition-all hover:-translate-y-1">
                 <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-2xl font-bold group-hover:bg-rose-500 group-hover:text-white transition-all">
                     💰
                 </div>

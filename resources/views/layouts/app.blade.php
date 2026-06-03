@@ -77,7 +77,10 @@
                     <a href="{{ route('admin.reservations.index') }}" class="text-sm font-medium {{ Request::is('admin/reservations*') ? 'text-pink-600 font-semibold' : 'text-slate-600 hover:text-pink-600' }} transition">
                         Reservations
                     </a>
-                    <a href="/admin/reports" class="text-sm font-medium {{ Request::is('admin/reports*') ? 'text-pink-600 font-semibold' : 'text-slate-600 hover:text-pink-600' }} transition">
+                    <a href="/admin/pos" class="text-sm font-medium {{ Request::is('admin/reports*') ? 'text-pink-600 font-semibold' : 'text-slate-600 hover:text-pink-600' }} transition">
+                        POS System
+                    </a>
+                    <a href="/admin/report" class="text-sm font-medium {{ Request::is('admin/reports*') ? 'text-pink-600 font-semibold' : 'text-slate-600 hover:text-pink-600' }} transition">
                         Reports
                     </a>
                 </div>

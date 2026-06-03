@@ -84,4 +84,7 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::post('/pos/pay/{id_reservation}', [TransactionController::class, 'processReservationPayment'])->name('pos.pay');
     
     Route::resource('transactions', TransactionController::class);
+
+    Route::get('/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('report.index');
+
 });

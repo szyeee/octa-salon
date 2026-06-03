@@ -25,9 +25,9 @@ class UserController extends Controller
         $totalServices = Service::count();
 
         // Hitung total transaksi
-        $totalRevenue = Transaction::sum('amount');
+        $totalRevenueAllTime = Transaction::sum('amount') ?? 0;
 
-        return view('admin.dashboard', compact('users', 'totalReservations', 'totalServices', 'totalRevenue'));
+        return view('admin.dashboard', compact('users', 'totalReservations', 'totalServices', 'totalRevenueAllTime'));
     }
 
     public function index(Request $request): View

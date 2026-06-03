@@ -18,7 +18,6 @@
         </div>
     @endif
 
-    {{-- ================= TABEL ATAS: ANTREAN RESERVASI ================= --}}
     <div class="bg-white rounded-[2rem] border border-pink-100 shadow-xl overflow-hidden">
         <table class="w-full text-left border-collapse">
             <thead>
@@ -33,6 +32,7 @@
                 @forelse($queue as $item)
                     <tr class="hover:bg-slate-50/50 transition">
                         <td class="p-5 font-semibold text-slate-800">
+                            {{ $item->user->nama ?? ($item->customer_name ?? 'Pelanggan Reservasi') }}
                         </td>
                         <td class="p-5">
                             <span class="px-2.5 py-1 text-xs font-semibold bg-purple-50 text-purple-600 rounded-md">
@@ -67,7 +67,6 @@
         </table>
     </div>
 
-    {{-- ================= TABEL BAWAH: RIWAYAT TRANSAKSI ================= --}}
     <div class="mt-12">
         <h2 class="text-xl font-bold text-slate-800 mb-4">Today's Transaction History</h2>
         <div class="bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden">
