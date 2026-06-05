@@ -5,7 +5,8 @@
 <section class="relative overflow-hidden bg-gradient-to-r from-pink-500 via-rose-500 to-pink-600 py-24">
     <div class="max-w-7xl mx-auto px-6 text-center text-white relative z-10">
         <span class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm backdrop-blur">
-            ✨ Beautiful Moments
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="animate-pulse"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5z"/><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/></svg>
+            Beautiful Moments
         </span>
         <h1 class="mt-8 text-5xl md:text-6xl font-extrabold tracking-tight">
             Our Gallery
@@ -67,8 +68,17 @@
 
             </div>
         @empty
-            <div class="col-span-full text-center py-16 bg-white rounded-[2rem] border border-pink-100 shadow-sm">
-                <p class="text-slate-400 font-medium">No photographs available in this category yet.</p>
+            {{-- Tampilan Cadangan Jika Foto Kosong --}}
+            <div class="col-span-full flex flex-col items-center justify-center text-center py-20 bg-pink-50/10 rounded-[2rem] border border-dashed border-pink-200 shadow-sm">
+                
+                <div class="w-16 h-16 rounded-full bg-pink-50 flex items-center justify-center text-pink-500 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+                </div>
+
+                <p class="text-slate-400 font-medium">
+                    No photographs available in this category yet.
+                </p>
+                
             </div>
         @endforelse
 

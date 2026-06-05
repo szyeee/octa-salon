@@ -23,9 +23,8 @@
         <div class="text-center text-white">
 
             <span class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2 text-sm backdrop-blur">
-
-                ✨ Premium Beauty Treatment
-
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="animate-pulse"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5z"/><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/></svg>
+                Premium Beauty Treatment
             </span>
 
             <h1 class="mt-8 text-5xl md:text-6xl font-extrabold tracking-tight">
@@ -83,12 +82,12 @@
 
                         @auth
                         <a href="/booking/create/{{ $service->id_service }}"
-                           class="rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-3 text-sm font-semibold text-white">
+                           class="rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-3 text-sm font-semibold text-white shadow-md hover:scale-105 transition duration-300">
                             Book Now
                         </a>
                         @else
                         <a href="/login"
-                           class="rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-3 text-sm font-semibold text-white">
+                           class="rounded-full bg-gradient-to-r from-pink-500 to-rose-500 px-5 py-3 text-sm font-semibold text-white shadow-md hover:scale-105 transition duration-300">
                             Login First
                         </a>
                         @endauth
@@ -100,9 +99,16 @@
             </div>
         @empty
             {{-- Tampilan Cadangan Jika Admin Menghapus Semua Layanan --}}
-            <div class="col-span-full text-center py-16 bg-pink-50/10 rounded-[2rem] border border-dashed border-pink-200">
-                <span class="text-4xl">🌸</span>
-                <p class="mt-4 text-slate-500 font-medium">Currently, there are no services available at Salon Octa.</p>
+            <div class="col-span-full flex flex-col items-center justify-center text-center py-20 bg-pink-50/20 rounded-[2rem] border-2 border-dashed border-pink-200">
+                
+                <div class="w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center text-pink-500 mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m2 7 4.41-4.41A2 2 0 0 1 7.83 2h8.34a2 2 0 0 1 1.42.59L22 7"/><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M15 22v-4a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v4"/><path d="M2 7h20"/><path d="M22 7v3a2 2 0 0 1-2 2v0a2 2 0 0 1-2-2V7"/><path d="M14 7v3a2 2 0 0 1-2 2v0a2 2 0 0 1-2-2V7"/><path d="M6 7v3a2 2 0 0 1-2 2v0a2 2 0 0 1-2-2V7"/></svg>
+                </div>
+
+                <p class="text-slate-500 font-medium text-lg">
+                    Currently, there are no services available at Salon Octa.
+                </p>
+                
             </div>
         @endforelse
 

@@ -34,9 +34,11 @@ Route::post('/register', [AuthController::class, 'store']);
 
 Route::post('/logout', [AuthController::class, 'logout']);
 
-Route::middleware('auth')->group(function () {
+Route::get('/services', [ServiceController::class, 'index']);
 
-    Route::get('/home', [HomeController::class, 'index']);
+Route::get('/home', [HomeController::class, 'index']);
+
+Route::middleware('auth')->group(function () {
 
     Route::get('/appointments', [BookingController::class, 'history']);
 
@@ -51,7 +53,6 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('/profile/update', [AuthController::class, 'updateProfile']);
-    Route::resource('services', ServiceController::class);
 
 });
 

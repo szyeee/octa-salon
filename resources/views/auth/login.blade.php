@@ -19,7 +19,7 @@
                 </span>
 
                 <h1 class="mt-8 text-5xl font-extrabold leading-tight">
-                    Welcome Back Beautiful ✨
+                    Welcome Back Beautiful 
                 </h1>
 
                 <p class="mt-6 text-white/90 leading-8">

@@ -15,9 +15,8 @@
             <div>
 
                 <span class="inline-flex items-center gap-2 rounded-full bg-pink-100 px-5 py-2 text-sm font-semibold text-pink-600 shadow-sm">
-
-                    ✨ Luxury Beauty Experience
-
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="animate-pulse"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5z"/><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/></svg>
+                    Luxury Beauty Experience
                 </span>
 
                 <h1 class="mt-8 text-6xl leading-tight font-extrabold text-slate-900">
@@ -86,8 +85,9 @@
 
                     <div class="rounded-3xl bg-white border border-pink-100 p-6 shadow-lg">
 
-                        <div class="text-4xl font-extrabold text-pink-600">
-                            4.9★
+                        <div class="text-4xl font-extrabold text-pink-600 flex items-center gap-1">
+                            4.9
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" class="text-pink-600"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                         </div>
 
                         <div class="mt-2 text-sm text-slate-500">
@@ -128,9 +128,9 @@
 
                             </div>
 
-                            <div class="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-3xl">
+                            <div class="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-white">
 
-                                ✨
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5z"/><path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z"/></svg>
 
                             </div>
 
@@ -169,90 +169,71 @@
 
     </div>
 
-    <div class="mt-20 grid md:grid-cols-2 xl:grid-cols-4 gap-8">
+<section class="max-w-7xl mx-auto px-6 py-16 bg-pink-50/20">
+    
+    <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-6 items-stretch">
+        
+        <div class="flex flex-col h-full rounded-[2rem] border border-pink-100 bg-white p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
 
-        <div class="group rounded-[2rem] bg-white border border-pink-100 p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
-
-            <div class="w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center text-3xl">
-
-                💆‍♀️
-
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-pink-50 text-pink-500 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
             </div>
 
-            <h3 class="mt-6 text-2xl font-bold text-slate-800">
+            <h3 class="text-2xl font-extrabold text-slate-800 leading-tight">
                 Relaxing Treatment
             </h3>
 
-            <p class="mt-4 leading-8 text-slate-500">
-
+            <p class="mt-4 text-slate-500 text-sm leading-6 flex-grow">
                 Enjoy calming and luxurious salon experiences for your beauty and comfort.
-
             </p>
-
         </div>
 
-        <div class="group rounded-[2rem] bg-white border border-pink-100 p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+        <div class="flex flex-col h-full rounded-[2rem] border border-pink-100 bg-white p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
 
-            <div class="w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center text-3xl">
-
-                ✨
-
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-pink-50 text-pink-500 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
             </div>
 
-            <h3 class="mt-6 text-2xl font-bold text-slate-800">
+            <h3 class="text-2xl font-extrabold text-slate-800 leading-tight">
                 Premium Products
             </h3>
 
-            <p class="mt-4 leading-8 text-slate-500">
-
+            <p class="mt-4 text-slate-500 text-sm leading-6 flex-grow">
                 High-quality salon products for healthy hair and glowing beauty results.
-
             </p>
-
         </div>
 
-        <div class="group rounded-[2rem] bg-white border border-pink-100 p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+        <div class="flex flex-col h-full rounded-[2rem] border border-pink-100 bg-white p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
 
-            <div class="w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center text-3xl">
-
-                🌸
-
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-pink-50 text-pink-500 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 9V6a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3"/><path d="M3 11v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2Z"/><path d="M5 18v2"/><path d="M19 18v2"/></svg>
             </div>
 
-            <h3 class="mt-6 text-2xl font-bold text-slate-800">
+            <h3 class="text-2xl font-extrabold text-slate-800 leading-tight">
                 Elegant Atmosphere
             </h3>
 
-            <p class="mt-4 leading-8 text-slate-500">
-
+            <p class="mt-4 text-slate-500 text-sm leading-6 flex-grow">
                 Feel comfortable with our modern, clean, and aesthetic salon environment.
-
             </p>
-
         </div>
 
-        <div class="group rounded-[2rem] bg-white border border-pink-100 p-8 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
+        <div class="flex flex-col h-full rounded-[2rem] border border-pink-100 bg-white p-8 shadow-md hover:shadow-xl hover:-translate-y-1 transition duration-300">
 
-            <div class="w-16 h-16 rounded-2xl bg-pink-100 flex items-center justify-center text-3xl">
-
-                💖
-
+            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-pink-50 text-pink-500 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
             </div>
 
-            <h3 class="mt-6 text-2xl font-bold text-slate-800">
+            <h3 class="text-2xl font-extrabold text-slate-800 leading-tight">
                 Trusted Service
             </h3>
-
-            <p class="mt-4 leading-8 text-slate-500">
-
+            
+            <p class="mt-4 text-slate-500 text-sm leading-6 flex-grow">
                 Loved by many customers with professional service and satisfying treatments.
-
             </p>
-
         </div>
 
     </div>
-
 </section>
 
 @endsection
