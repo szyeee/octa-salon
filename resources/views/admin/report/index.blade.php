@@ -9,6 +9,7 @@
             <p class="mt-1 text-sm text-slate-500">Monitor the development of turnover, transaction types, and best-selling services at Octa Salon.</p>
         </div>
         
+        {{-- FORM FILTER & EXPORT --}}
         <form method="GET" action="{{ route('admin.report.index') }}" class="flex flex-wrap items-center gap-3 bg-slate-50 p-2 rounded-2xl border border-slate-200/60 ">
             <div class="flex items-center gap-2 pl-2">
                 <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">From:</span>
@@ -20,8 +21,24 @@
                 <input type="date" name="end_date" value="{{ $endDate }}" 
                        class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-pink-400 focus:ring-1 focus:ring-pink-400/50 transition">
             </div>
+            
+            {{-- DROPDOWN FILTER TIPE TRANSAKSI --}}
+            <div class="flex items-center gap-2 border-l border-slate-200 pl-3">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Type:</span>
+                <select name="type" class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 outline-none focus:border-pink-400 transition">
+                    <option value="all" {{ $type == 'all' ? 'selected' : '' }}>All Transactions</option>
+                    <option value="app" {{ $type == 'app' ? 'selected' : '' }}>App Reservation</option>
+                    <option value="walkin" {{ $type == 'walkin' ? 'selected' : '' }}>Walk-In</option>
+                </select>
+            </div>
+
             <button type="submit" class="bg-slate-900 hover:bg-slate-800 text-white font-medium px-4 py-1.5 rounded-xl text-xs shadow-sm transition-all tracking-wide">
                 Search
+            </button>
+
+            {{-- TOMBOL DOWNLOAD EXCEL --}}
+            <button type="submit" name="export" value="excel" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-4 py-1.5 rounded-xl text-xs shadow-sm transition-all tracking-wide flex items-center gap-1">
+                Export Excel
             </button>
         </form>
     </div>
@@ -62,11 +79,11 @@
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
-        {{--  TABEL 5 LAYANAN TERLARIS --}}
+        {{-- TABEL 5 LAYANAN TERLARIS --}}
         <div class="lg:col-span-1 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col">
             <div class="mb-4">
                 <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-                    <span>🏆</span> Bestselling Services
+                    Bestselling Services
                 </h2>
                 <p class="text-xs text-slate-400 mt-0.5">Most in-demand treatments.</p>
             </div>
@@ -98,7 +115,7 @@
             </div>
         </div>
 
-        {{--  TABEL DETAIL RIWAYAT TRANSAKSI TERFILTER --}}
+        {{-- TABEL DETAIL RIWAYAT TRANSAKSI TERFILTER --}}
         <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex flex-col">
             <div class="mb-4">
                 <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
