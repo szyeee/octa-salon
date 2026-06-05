@@ -1,4 +1,3 @@
-{{-- resources/views/layouts/app.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -39,7 +38,6 @@
         <nav class="flex items-center gap-6">
             @if(Auth::check() && Auth::user()->is_admin)
                 <div class="hidden lg:flex items-center gap-5 border-r border-slate-200 pr-5">
-                    <!-- FIX: Memperbaiki syntax error kodingan Blade yang bocor/nyasar sebelumnya -->
                     <a href="/admin/dashboard" class="text-sm font-medium {{ Request::is('admin/dashboard*') ? 'text-pink-600 font-semibold' : 'text-slate-600 hover:text-pink-600' }} transition">
                         Dashboard
                     </a>
@@ -103,29 +101,44 @@
 
                     <div id="profileMenu" class="hidden absolute right-0 mt-3 w-64 overflow-hidden rounded-3xl border border-pink-100 bg-white shadow-2xl z-50">
                         <div class="bg-gradient-to-r from-pink-500 to-rose-500 px-6 py-5 text-white">
-                            <div class="flex items-center gap-4">
+                            <div class="flex items-start gap-4">
                                 <div class="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center text-xl font-bold backdrop-blur shrink-0">
                                     {{ strtoupper(substr(Auth::user()->nama,0,1)) }}
                                 </div>
-                                <div class="min-w-0">
+                                <div class="min-w-0 flex-1">
                                     <div class="font-bold text-lg truncate">
                                         {{ Auth::user()->nama }}
                                     </div>
                                     <div class="text-sm text-white/90 truncate">
                                         {{ Auth::user()->email }}
                                     </div>
+                                    
+                                    <div class="mt-2">
+                                        @if(auth()->user()->hasVerifiedEmail())
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-500/30 text-emerald-100 border border-emerald-400/20">
+                                                Verified 
+                                            </span>
+                                        @else
+                                            <div class="flex flex-col items-start gap-1">
+                                                <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold bg-amber-500/30 text-amber-100 border border-amber-400/20">
+                                                    Unverified Account
+                                                </span>
+                                                <a href="{{ route('verification.notice') }}" class="text-[11px] text-white underline hover:text-pink-100 font-semibold tracking-wide">
+                                                    Verify Your Account
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="p-2">
-                            <!-- SVG Link: Edit Profile -->
                             <a href="/profile" class="flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-slate-700 hover:bg-pink-50 transition">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                                 Edit Profile
                             </a>
 
-                            <!-- SVG Link: Logout -->
                             <form method="POST" action="/logout">
                                 @csrf
                                 <button class="flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium text-red-500 hover:bg-red-50 transition">

@@ -43,7 +43,7 @@
                 </p>
 
                 @if(session('error'))
-                    <div class="mt-5 bg-red-100 text-red-700 px-4 py-3 rounded-2xl">
+                    <div class="mt-5 bg-red-100 text-red-700 px-4 py-3 rounded-2xl text-sm">
                         {{ session('error') }}
                     </div>
                 @endif
@@ -52,8 +52,8 @@
 
                     @csrf
 
+                    {{-- Input: Email --}}
                     <div>
-
                         <label class="block mb-2 text-sm font-semibold text-slate-700">
                             Email
                         </label>
@@ -61,13 +61,17 @@
                         <input
                             type="email"
                             name="email"
+                            value="{{ old('email') }}"
                             placeholder="Enter your email"
-                            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:border-pink-400 focus:bg-white">
-
+                            class="w-full rounded-2xl border @error('email') border-red-400 bg-red-50/30 @else border-slate-200 bg-slate-50 @enderror px-5 py-4 outline-none focus:border-pink-400 focus:bg-white transition"
+                            required>
+                        @error('email')
+                            <p class="mt-1 text-xs text-red-500 font-medium pl-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
+                    {{-- Input: Password --}}
                     <div>
-
                         <label class="block mb-2 text-sm font-semibold text-slate-700">
                             Password
                         </label>
@@ -76,33 +80,33 @@
                             type="password"
                             name="password"
                             placeholder="Enter your password"
-                            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:border-pink-400 focus:bg-white">
-
+                            class="w-full rounded-2xl border @error('password') border-red-400 bg-red-50/30 @else border-slate-200 bg-slate-50 @enderror px-5 py-4 outline-none focus:border-pink-400 focus:bg-white transition"
+                            required>
+                        @error('password')
+                            <p class="mt-1 text-xs text-red-500 font-medium pl-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
-                    <div class="flex justify-end text-sm">
-                        <a href="/forgot-password" class="font-medium text-pink-600 hover:text-pink-700 hover:underline">
+                    {{-- Forgot Password Link --}}
+                    <div class="flex justify-end text-sm pt-1">
+                        <a href="/forgot-password" class="font-semibold text-pink-600 hover:text-pink-700 hover:underline transition">
                             Forgot Password?
                         </a>
                     </div>
 
                     <button
-                        class="w-full rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 py-4 text-lg font-bold text-white shadow-xl shadow-pink-200 transition hover:scale-[1.02]">
-
+                        type="submit"
+                        class="w-full rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 py-4 text-lg font-bold text-white shadow-xl shadow-pink-200 transition hover:scale-[1.02] active:scale-[0.99]">
                         Login
-
                     </button>
 
                 </form>
 
                 <p class="mt-8 text-center text-slate-500">
-
                     Don't have an account?
-
-                    <a href="/register" class="font-semibold text-pink-600 hover:text-pink-700">
+                    <a href="/register" class="font-semibold text-pink-600 hover:text-pink-700 transition">
                         Register
                     </a>
-
                 </p>
 
             </div>

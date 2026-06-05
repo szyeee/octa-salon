@@ -6,8 +6,12 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Password as PasswordFacade; 
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password as PasswordRules; 
+use Illuminate\Auth\Events\Registered; 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class AuthController extends Controller
 {
@@ -21,23 +25,35 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $request->validate([
             'nama' => 'required',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6'
+            'password' => [
+                'required',
+                'confirmed', 
+                PasswordRules::min(6), 
+            ]
         ]);
 
-        User::create([
+        // Simpan data user ke database
+        $user = User::create([
             'nama' => $request->nama,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'customer'
         ]);
 
-        return redirect('/login')
-            ->with('success', 'Register berhasil');
+        // TRIGGER SISTEM: Laravel otomatis mengirimkan email verifikasi ke email pendaftar
+        event(new Registered($user));
+
+        // Otomatis buat user berstatus login setelah register
+        Auth::login($user);
+
+        // Lempar ke halaman pemberitahuan verifikasi email bawaan laravel
+        return redirect('/email/verify')
+            ->with('success', 'Registrasi sukses! Silakan periksa kotak masuk email kamu untuk verifikasi.');
     }
 
     public function authenticate(Request $request)
@@ -110,11 +126,11 @@ class AuthController extends Controller
             'email' => 'required|email|exists:users,email',
         ]);
 
-        $status = Password::sendResetLink(
+        $status = PasswordFacade::sendResetLink(
             $request->only('email')
         );
 
-        return $status === Password::RESET_LINK_SENT
+        return $status === PasswordFacade::RESET_LINK_SENT
             ? back()->with(['success' => 'Link reset password telah dikirim ke email Anda.'])
             : back()->withErrors(['email' => 'Gagal mengirim link reset password.']);
     }
@@ -127,16 +143,20 @@ class AuthController extends Controller
         ]);
     }
 
-    // Fungsi memproses password baru ke database
     public function resetPassword(Request $request)
     {
         $request->validate([
             'token' => 'required',
             'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:6|confirmed',
+            
+            'password' => [
+                'required',
+                'confirmed',
+                PasswordRules::min(6),
+            ],
         ]);
 
-        $status = Password::reset(
+        $status = PasswordFacade::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user, $password) {
                 $user->password = Hash::make($password);
@@ -144,7 +164,7 @@ class AuthController extends Controller
             }
         );
 
-        if ($status === Password::PASSWORD_RESET) {
+        if ($status === PasswordFacade::PASSWORD_RESET) {
             return redirect('/login')->with('success', 'Password kamu berhasil direset! Silakan login.');
         }
 

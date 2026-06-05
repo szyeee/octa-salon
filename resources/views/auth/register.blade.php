@@ -49,7 +49,7 @@
                 @endif
 
                 @if($errors->any())
-                    <div class="mt-5 bg-red-100 text-red-700 px-4 py-3 rounded-2xl">
+                    <div class="mt-5 bg-red-100 text-red-700 px-4 py-3 rounded-2xl text-sm">
                         {{ $errors->first() }}
                     </div>
                 @endif
@@ -58,6 +58,7 @@
 
                     @csrf
 
+                    {{-- Input: Full Name --}}
                     <div>
                         <label class="block mb-2 text-sm font-semibold text-slate-700">
                             Full Name
@@ -66,10 +67,15 @@
                         <input
                             type="text"
                             name="nama"
+                            value="{{ old('nama') }}"
                             placeholder="Enter your full name"
-                            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:border-pink-400 focus:bg-white">
+                            class="w-full rounded-2xl border @error('nama') border-red-400 bg-red-50/30 @else border-slate-200 bg-slate-50 @enderror px-5 py-4 outline-none focus:border-pink-400 focus:bg-white transition">
+                        @error('nama')
+                            <p class="mt-1 text-xs text-red-500 font-medium pl-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
+                    {{-- Input: Email --}}
                     <div>
                         <label class="block mb-2 text-sm font-semibold text-slate-700">
                             Email
@@ -78,10 +84,15 @@
                         <input
                             type="email"
                             name="email"
+                            value="{{ old('email') }}"
                             placeholder="Enter your email"
-                            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:border-pink-400 focus:bg-white">
+                            class="w-full rounded-2xl border @error('email') border-red-400 bg-red-50/30 @else border-slate-200 bg-slate-50 @enderror px-5 py-4 outline-none focus:border-pink-400 focus:bg-white transition">
+                        @error('email')
+                            <p class="mt-1 text-xs text-red-500 font-medium pl-1">{{ $message }}</p>
+                        @enderror
                     </div>
 
+                    {{-- Input: Password --}}
                     <div>
                         <label class="block mb-2 text-sm font-semibold text-slate-700">
                             Password
@@ -91,26 +102,38 @@
                             type="password"
                             name="password"
                             placeholder="Enter password"
-                            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:border-pink-400 focus:bg-white">
+                            class="w-full rounded-2xl border @error('password') border-red-400 bg-red-50/30 @else border-slate-200 bg-slate-50 @enderror px-5 py-4 outline-none focus:border-pink-400 focus:bg-white transition">
+                        @error('password')
+                            <p class="mt-1 text-xs text-red-500 font-medium pl-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    {{-- Confirm Password --}}
+                    <div>
+                        <label class="block mb-2 text-sm font-semibold text-slate-700">
+                            Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            name="password_confirmation"
+                            placeholder="Repeat your password"
+                            class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-5 py-4 outline-none focus:border-pink-400 focus:bg-white transition">
                     </div>
 
                     <button
-                        class="w-full rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 py-4 text-lg font-bold text-white shadow-xl shadow-pink-200 transition hover:scale-[1.02]">
-
+                        type="submit"
+                        class="w-full rounded-2xl bg-gradient-to-r from-pink-500 to-rose-500 py-4 text-lg font-bold text-white shadow-xl shadow-pink-200 transition hover:scale-[1.02] active:scale-[0.99]">
                         Register Account
-
                     </button>
 
                 </form>
 
                 <p class="mt-8 text-center text-slate-500">
-
                     Already have an account?
-
                     <a href="/login" class="font-semibold text-pink-600 hover:text-pink-700">
                         Login
                     </a>
-
                 </p>
 
             </div>

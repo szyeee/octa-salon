@@ -15,6 +15,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\SlotTimeController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\TransactionController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -32,13 +34,13 @@ Route::get('/register', [AuthController::class, 'register']);
 
 Route::post('/register', [AuthController::class, 'store']);
 
-Route::post('/logout', [AuthController::class, 'logout']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/services', [ServiceController::class, 'index']);
 
 Route::get('/home', [HomeController::class, 'index']);
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','verified')->group(function () {
 
     Route::get('/appointments', [BookingController::class, 'history']);
 
@@ -91,3 +93,18 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
     Route::get('/report/export', [\App\Http\Controllers\ReportController::class, 'export'])->name('report.export');
 
 });
+
+
+Route::get('/email/verify', function () {
+    return view('auth.verify-email');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return redirect('/home')->with('success', 'Email berhasil diverifikasi!');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return back()->with('message', 'Link verifikasi baru telah dikirim!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');
