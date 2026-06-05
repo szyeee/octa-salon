@@ -18,6 +18,11 @@ class Transaction extends Model
         'status',
     ];
 
+    public function transactionDetails() 
+    {
+        return $this->hasMany(TransactionDetail::class, 'id_transaction', 'id_transaction');
+    }
+
     public function reservation()
     {
         return $this->belongsTo(Reservation::class, 'id_reservation');

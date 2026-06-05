@@ -18,6 +18,7 @@
                 <th style="padding: 8px;">No</th>
                 <th style="padding: 8px;">Customer Name</th>
                 <th style="padding: 8px;">Transaction Type</th>
+                <th style="padding: 8px;">Services Taken</th> {{-- KOLOM BARU --}}
                 <th style="padding: 8px;">Payment Date/Time</th>
                 <th style="padding: 8px;">Total Price</th>
             </tr>
@@ -37,12 +38,24 @@
                         @endif
                     </td>
                     <td style="text-align: center; padding: 5px;">{{ $trx->id_reservation ? 'App Reservation' : 'Walk-In' }}</td>
+                    
+                    {{-- LOGIKA BARU: MENGAMBIL NAMA LAYANAN YANG DIAMBIL --}}
+                    <td style="padding: 5px;">
+                        @if($trx->transactionDetails && $trx->transactionDetails->count() > 0)
+                            {{ $trx->transactionDetails->map(function($detail) {
+                                return $detail->service ? $detail->service->name : 'Unknown Service';
+                            })->implode(', ') }}
+                        @else
+                            -
+                        @endif
+                    </td>
+
                     <td style="padding: 5px;">{{ $trx->created_at->format('d M Y, H:i') }} WIB</td>
                     <td style="text-align: right; padding: 5px;">Rp {{ number_format($trx->total_price, 0, ',', '.') }}</td>
                 </tr>
             @endforeach
             <tr style="font-weight: bold; background-color: #e6e6e6;">
-                <td colspan="4" style="text-align: right; padding: 8px;">GRAND TOTAL REVENUE:</td>
+                <td colspan="5" style="text-align: right; padding: 8px;">GRAND TOTAL REVENUE:</td> {{-- Colspan diubah jadi 5 --}}
                 <td style="text-align: right; padding: 8px;">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</td>
             </tr>
         </tbody>

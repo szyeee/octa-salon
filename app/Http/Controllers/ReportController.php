@@ -17,7 +17,7 @@ class ReportController extends Controller
         $type = $request->input('type', 'all'); 
 
         // Query dasar berdasarkan tanggal dan status paid
-        $query = Transaction::with(['reservation.user'])
+        $query = Transaction::with(['reservation.user', 'transactionDetails.service']) 
             ->whereBetween('created_at', [$startDate . ' 00:00:00', $endDate . ' 23:59:59'])
             ->where('status', 'paid');
 
