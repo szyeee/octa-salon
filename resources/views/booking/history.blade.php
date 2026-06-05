@@ -61,7 +61,7 @@
 
                         <h2 class="mt-5 text-3xl font-bold text-slate-800">
                             {{ $reservation->service->name ?? 'Salon Service' }}
-                        </h2>
+                        </h2> 
 
                         <div class="mt-4 flex flex-wrap gap-6 text-slate-500">
                             <div>
@@ -73,15 +73,26 @@
                         </div>
                     </div>
 
-                    <div class="rounded-3xl bg-pink-50 px-8 py-6 min-w-[200px] text-center lg:text-left">
-                        <div class="text-sm text-slate-500">
-                            Booking Status
+                    <!-- BLOK STATUS & TOMBOL LIHAT STRUK -->
+                    <div class="flex flex-col items-center lg:items-end gap-3 min-w-[200px]">
+                        <div class="w-full rounded-3xl bg-pink-50 px-8 py-6 text-center lg:text-left">
+                            <div class="text-sm text-slate-500">
+                                Booking Status
+                            </div>
+                            <div class="mt-2 text-2xl font-bold 
+                                {{ $reservation->status == 'done' ? 'text-green-600' : 'text-pink-600' }}
+                            ">
+                                {{ ucfirst($reservation->status) }}
+                            </div>
                         </div>
-                        <div class="mt-2 text-2xl font-bold 
-                            {{ $reservation->status == 'done' ? 'text-green-600' : 'text-pink-600' }}
-                        ">
-                            {{ ucfirst($reservation->status) }}
-                        </div>
+
+                        <!-- TOMBOL KELUAR HANYA JIKA STATUS SUDAH DONE (LUNAS/SELESAI) -->
+                        @if($reservation->status == 'done' && $reservation->transaction)
+                            <a href="{{ route('booking.preview', $reservation->transaction->id_transaction) }}" 
+                               class="w-full text-center px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl transition border border-slate-200">
+                                View Receipt
+                            </a>
+                        @endif
                     </div>
 
                 </div>

@@ -47,7 +47,9 @@
                                 @csrf
                                 <div class="relative">
                                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-xs text-slate-400 font-bold">Rp</span>
-                                    <input type="number" name="amount_paid" placeholder="{{ $item->service->price }}" min="{{ $item->service->price }}" required
+                                    
+                                    <input type="number" name="amount_paid" value="{{ $item->service->price }}" min="{{ $item->service->price }}" required
+                                           style="-webkit-appearance: none; -moz-appearance: textfield; margin: 0;"
                                            class="w-40 rounded-xl border border-slate-200 pl-8 pr-3 py-2 text-xs focus:border-pink-400 outline-none transition font-semibold text-slate-700">
                                 </div>
                                 <button type="submit" class="bg-emerald-500 hover:bg-emerald-600 text-white font-bold px-4 py-2 rounded-xl text-xs shadow-md shadow-emerald-100 transition-all">
@@ -67,8 +69,9 @@
         </table>
     </div>
 
+    {{-- TABEL RIWAYAT TRANSAKSI --}}
     <div class="mt-12">
-        <h2 class="text-xl font-bold text-slate-800 mb-4">Today's Transaction History</h2>
+        <h2 class="text-xl font-bold text-slate-800 mb-4">Transaction History</h2>
         <div class="bg-white rounded-[2rem] border border-slate-100 shadow-xl overflow-hidden">
             <table class="w-full text-left border-collapse">
                 <thead>
@@ -77,6 +80,7 @@
                         <th class="p-5">Type</th>
                         <th class="p-5">Total Payment</th>
                         <th class="p-5">Status</th>
+                        <th class="p-5 text-center">Action</th> {{-- Kolom Aksi Baru --}}
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-100 text-sm text-slate-600">
@@ -85,13 +89,10 @@
                         
                             <td class="p-5 font-semibold text-slate-800">
                                 @if(!empty($trx->customer_name) && $trx->customer_name !== 'Pelanggan Reservasi')
-                                    {{-- Jika di database sudah ada nama aslinya, langsung tampilkan --}}
                                     {{ $trx->customer_name }}
                                 @elseif($trx->reservation && $trx->reservation->user)
-                                    {{-- JIKA data di database terlanjur null / bertuliskan 'Pelanggan Reservasi', kita tarik live dari tabel users --}}
                                     {{ $trx->reservation->user->nama }}
                                 @else
-                                    {{-- Batas aman terakhir untuk transaksi Walk-In biasa --}}
                                     {{ $trx->customer_name ?? 'Pelanggan Salon' }}
                                 @endif
                             </td>
@@ -109,10 +110,17 @@
                                     {{ strtoupper($trx->status) }}
                                 </span>
                             </td>
+                            
+                            {{-- STRUK BELANJA --}}
+                            <td class="p-5 text-center">
+                                <a href="{{ route('admin.pos.print', $trx->id_transaction) }}" target="_blank" class="inline-flex items-center gap-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-3 py-1.5 rounded-xl text-xs transition border border-slate-200">
+                                    Receipt
+                                </a>
+                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="p-8 text-center text-slate-400">Belum ada transaksi keluar hari ini.</td>
+                            <td colspan="5" class="p-8 text-center text-slate-400">Belum ada transaksi keluar hari ini.</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -120,4 +128,16 @@
         </div>
     </div>
 </section>
+
+{{-- GAYA CSS KHUSUS UNTUK MENYEMBUNYIKAN PANAH BROWSER --}}
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 @endsection

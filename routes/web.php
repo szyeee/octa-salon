@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::post('/profile/update', [AuthController::class, 'updateProfile']);
-
+    Route::get('/booking/preview/{id_transaction}', [TransactionController::class, 'preview'])->name('booking.preview');
 });
 
 Route::get('/forgot-password', [AuthController::class, 'showForgotPasswordForm'])->name('password.request');
@@ -83,9 +83,11 @@ Route::middleware(['auth', \App\Http\Middleware\AdminMiddleware::class])->prefix
 
     Route::get('/pos', [TransactionController::class, 'index'])->name('pos.index');
     Route::post('/pos/pay/{id_reservation}', [TransactionController::class, 'processReservationPayment'])->name('pos.pay');
+    Route::get('pos/print/{id_transaction}', [TransactionController::class, 'print'])->name('pos.print');
     
     Route::resource('transactions', TransactionController::class);
 
     Route::get('/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('report.index');
+    Route::get('/report/export', [\App\Http\Controllers\ReportController::class, 'export'])->name('report.export');
 
 });

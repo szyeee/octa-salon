@@ -16,6 +16,7 @@ class Transaction extends Model
         'customer_name',
         'total_price',
         'status',
+        'amount_paid', 
     ];
 
     public function transactionDetails() 
